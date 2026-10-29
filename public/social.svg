@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f5f5ee"/>
+  <path d="M0 540h1200M820 0v630" stroke="#d6dcd0"/>
+  <g transform="translate(70 60)" fill="none" stroke="#0d6457" stroke-width="3"><path d="m24 0 22 13v25L24 51 2 38V13Z"/><path d="m2 13 22 13 22-13M24 26v25"/></g>
+  <text x="135" y="95" font-family="Helvetica,Arial,sans-serif" font-size="32" fill="#192d29" font-weight="bold">ANS</text>
+  <text x="70" y="205" font-family="Helvetica,Arial,sans-serif" font-size="16" letter-spacing="3" fill="#53635e">AGENT NAME SERVICE</text>
+  <text x="65" y="310" font-family="Helvetica,Arial,sans-serif" font-size="70" letter-spacing="-4" fill="#192d29">Verifiable identity</text>
+  <text x="65" y="405" font-family="Georgia,serif" font-style="italic" font-size="80" letter-spacing="-4" fill="#0d6457">for AI agents.</text>
+  <text x="70" y="475" font-family="Helvetica,Arial,sans-serif" font-size="24" fill="#53635e">An open specification, built by the community.</text>
+  <text x="70" y="590" font-family="Helvetica,Arial,sans-serif" font-size="22" fill="#192d29">ansinfo.ai</text>
+  <g transform="translate(880 190)" stroke="#0d6457" fill="none" stroke-width="2"><path d="m100 0 90 52v104l-90 52-90-52V52Z"/><path d="m10 52 90 52 90-52M100 104v104"/><circle cx="100" cy="52" r="15" fill="#0d6457"/></g>
+</svg>

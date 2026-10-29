@@ -1,0 +1,30 @@
+---
+import Base from './Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    eyebrow: string;
+    heading: string;
+    description: string;
+    noindex?: boolean;
+  };
+}
+const {
+  title,
+  eyebrow,
+  heading,
+  description,
+  noindex = false,
+} = Astro.props.frontmatter;
+---
+
+<Base title={title} description={description} noindex={noindex}>
+  <PageIntro eyebrow={eyebrow} title={heading} description={description} />
+  <div class="container content-section">
+    <article class="prose">
+      <slot />
+    </article>
+  </div>
+</Base>

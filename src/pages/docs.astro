@@ -1,0 +1,126 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { specs, specification, organization, url } from '../data/site';
+---
+
+<Base
+  title="Specifications and documentation"
+  description="Find the seven ANS specification layers, discovery profiles, API contracts, worked examples, SDKs, and security analysis."
+>
+  <PageIntro
+    eyebrow="Specs & docs"
+    title="The specification is the source of truth."
+    description="ANS is defined in seven layers, with separate API contracts and worked examples. Use the canonical documents for normative requirements."
+  >
+    <div class="actions">
+      <a class="button" href={`${specification}/tree/main/spec`}>
+        Browse the specification <span aria-hidden="true">↗</span>
+      </a>
+      <a class="text-link" href={url('for-developers/')}>
+        New to ANS? Start here →
+      </a>
+    </div>
+  </PageIntro>
+  <section class="container content-section">
+    <h2>Seven layers, from identity to authentication.</h2>
+    <ol class="spec-list">
+      {specs.map((spec) => (
+        <li>
+          <a href={`${specification}/blob/main/spec/${spec.file}`}>
+            <span class="mono">{spec.id}</span>
+            <strong>{spec.title}</strong>
+            <p>{spec.description}</p>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+    <p class="section-note">
+      The specifications are drafts under active development. The links above
+      point to the current documents in the specification repository.
+    </p>
+  </section>
+  <section class="container content-section">
+    <h2>Implement the contract.</h2>
+    <div class="two-columns">
+      <article class="feature-block">
+        <p class="eyebrow">API definitions</p>
+        <h3>Registration & transparency</h3>
+        <p>
+          Machine-readable OpenAPI definitions for the Registration Authority
+          and Transparency Log, plus the V2 event schemas.
+        </p>
+        <a
+          class="text-link"
+          href={`${specification}/blob/main/api/api-spec-v2.yaml`}
+        >
+          Registration API ↗
+        </a>
+        <br />
+        <a
+          class="text-link"
+          href={`${specification}/blob/main/api/api-spec-tl-v2.yaml`}
+        >
+          Transparency Log API ↗
+        </a>
+        <br />
+        <a class="text-link" href={`${specification}/tree/main/api`}>
+          Event and response schemas ↗
+        </a>
+      </article>
+      <article class="feature-block">
+        <p class="eyebrow">Worked examples</p>
+        <h3>Follow the artifacts.</h3>
+        <p>
+          Read registration, transparency, integrity-monitoring, and
+          authentication examples alongside their specifications.
+        </p>
+        <a class="text-link" href={`${specification}/tree/main/spec/examples`}>
+          Protocol examples ↗
+        </a>
+        <br />
+        <a class="text-link" href={`${organization}/ans`}>
+          Runnable reference implementation ↗
+        </a>
+      </article>
+      <article class="feature-block">
+        <p class="eyebrow">Profiles</p>
+        <h3>Discovery & identity</h3>
+        <p>
+          DNS publication profiles define discovery records. Optional identity
+          profiles define additional proofs and their verification requirements.
+        </p>
+        <a
+          class="text-link"
+          href={`${specification}/tree/main/spec/discovery-profiles`}
+        >
+          Discovery profiles ↗
+        </a>
+        <br />
+        <a
+          class="text-link"
+          href={`${specification}/tree/main/spec/identity-profiles`}
+        >
+          Identity profiles ↗
+        </a>
+      </article>
+      <article class="feature-block">
+        <p class="eyebrow">Security</p>
+        <h3>Review the assumptions.</h3>
+        <p>
+          The MAESTRO analysis maps threats and mitigations across the
+          architecture. Each protocol layer also includes its security
+          considerations.
+        </p>
+        <a class="text-link" href={`${specification}/blob/main/MAESTRO.md`}>
+          Security analysis ↗
+        </a>
+        <br />
+        <a class="text-link" href={`${specification}/blob/main/SECURITY.md`}>
+          Vulnerability reporting ↗
+        </a>
+      </article>
+    </div>
+  </section>
+</Base>

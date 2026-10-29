@@ -1,0 +1,188 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { organization, specification, sdks, url } from '../data/site';
+---
+
+<Base
+  title="ANS implementations"
+  description="Explore the ANS reference implementation, Go, Rust, and Java SDKs, gateway integrations, OpenShell research preview, and related Trust Index work."
+>
+  <PageIntro
+    eyebrow="Implementations"
+    title="Software you can build with."
+    description="Explore the code you can build with today, the examples you can learn from, and the previews you can help shape."
+  />
+  <section class="container content-section">
+    <h2>Core implementation and SDKs</h2>
+    <article class="integration-row">
+      <div>
+        <span class="tag">Reference implementation</span>
+        <h3>
+          Registration Authority
+          <br />& Transparency Log
+        </h3>
+      </div>
+      <div>
+        <p>
+          A Go implementation of the registration lifecycle and transparency
+          services, with local demos and an offline verifier. Run it to
+          understand the protocol or evaluate your own deployment.
+        </p>
+        <a class="text-link" href={`${organization}/ans`}>
+          Explore ans ↗
+        </a>
+      </div>
+    </article>
+    {sdks.map((sdk) => (
+      <article class="integration-row">
+        <div>
+          <span class="tag">{sdk.label}</span>
+          <h3>{sdk.name}</h3>
+        </div>
+        <div>
+          <p>
+            {sdk.detail} Check the repository’s releases and documentation for
+            the exact supported API and verification features.
+          </p>
+          <a class="text-link" href={`${organization}/${sdk.repo}`}>
+            Explore {sdk.repo} ↗
+          </a>
+        </div>
+      </article>
+    ))}
+  </section>
+  <section class="container content-section">
+    <h2>Integrations and examples</h2>
+    <article class="integration-row">
+      <div>
+        <span class="tag">Verifier + gateway recipes</span>
+        <h3>
+          agentgateway
+          <br />& Agent Router
+        </h3>
+      </div>
+      <div>
+        <p>
+          <code>ans-gateway-auth</code> verifies ANS-6 Method B callers through
+          Envoy’s external authorization protocol. It includes gateway recipes
+          and end-to-end suites for agentgateway and Agent Router.
+        </p>
+        <p>
+          Support for other Envoy-compatible gateways depends on their
+          configuration and request forwarding. The repository documents that
+          coverage boundary.
+        </p>
+        <a class="text-link" href={`${organization}/ans-gateway-auth`}>
+          Source and deployment recipes ↗
+        </a>
+      </div>
+    </article>
+    <article class="integration-row">
+      <div>
+        <span class="tag preview">Research preview</span>
+        <h3>NVIDIA OpenShell</h3>
+      </div>
+      <div>
+        <p>
+          <code>ans-openshell</code> adds signing middleware and destination
+          registration checks outside an agent’s sandbox, keeping its identity
+          key out of the sandbox.
+        </p>
+        <p>
+          Its upstream extension contracts are previews. Destination
+          registration checks do not implement ANS-6 binding to the actual TLS
+          peer certificate; see the repository’s security notes.
+        </p>
+        <a class="text-link" href={`${organization}/ans-openshell`}>
+          Explore the research preview ↗
+        </a>
+      </div>
+    </article>
+    <article class="integration-row">
+      <div>
+        <span class="tag">SDK examples</span>
+        <h3>A2A, MCP & HTTP</h3>
+      </div>
+      <div>
+        <p>
+          Use the SDK examples as starting points for adding ANS verification to
+          protocol clients and services. Protocol compatibility still requires
+          an application to wire in and enforce verification.
+        </p>
+        <a
+          class="text-link"
+          href={`${organization}/ans-sdk-java/tree/main/ans-sdk-agent-client/examples`}
+        >
+          Java protocol examples ↗
+        </a>
+        <br />
+        <a
+          class="text-link"
+          href={`${organization}/ans-sdk-rust/blob/main/crates/ans-verify/examples/mcp_mtls_client.rs`}
+        >
+          Rust MCP client ↗
+        </a>
+      </div>
+    </article>
+  </section>
+  <section class="container content-section">
+    <h2>Related work</h2>
+    <div class="two-columns">
+      <article class="feature-block">
+        <p class="eyebrow">Discovery profile</p>
+        <h3>DNS-AID alignment</h3>
+        <p>
+          The published <code>ANS_DNSAID</code> profile uses SVCB records for
+          endpoint discovery. ANS adds registration and authentication evidence.
+          Read the profile for its current record format.
+        </p>
+        <a
+          class="text-link"
+          href={`${specification}/blob/main/spec/discovery-profiles/ans-dnsaid.md`}
+        >
+          Read the profile ↗
+        </a>
+      </article>
+      <article class="feature-block">
+        <p class="eyebrow">Separate project</p>
+        <h3>Trust evaluation</h3>
+        <p>
+          The Trust Index specification and Agent Trust Discovery reference
+          implementation explore scoring with ANS evidence and other signals.
+          Scoring is separate from ANS authentication; the implementation
+          documents deferred features.
+        </p>
+        <a class="text-link" href={`${organization}/trust-index-spec`}>
+          Trust Index specification ↗
+        </a>
+        <br />
+        <a class="text-link" href={`${organization}/agent-trust-discovery`}>
+          Reference implementation ↗
+        </a>
+      </article>
+    </div>
+  </section>
+  <section class="container content-section split-content">
+    <div>
+      <p class="eyebrow">Extend the ecosystem</p>
+      <h2>Bring your framework.</h2>
+    </div>
+    <div>
+      <p>
+        A framework can call an ANS SDK, API, or gateway verifier, but an
+        integration must enforce the verification result in the request path.
+        Adding a tool to an agent’s tool list alone does not guarantee that it
+        will be used.
+      </p>
+      <p>
+        Have an adapter to share? Open an issue with the public source,
+        installation instructions, supported ANS features, and tests that
+        demonstrate rejected invalid requests.
+      </p>
+      <a class="text-link" style="margin-top:20px" href={url('community/')}>
+        Contribute an integration →
+      </a>
+    </div>
+  </section>
+</Base>

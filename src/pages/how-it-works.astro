@@ -1,0 +1,239 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { specification, url } from '../data/site';
+---
+
+<Base
+  title="How ANS works"
+  description="Understand ANS registration, DNS discovery, transparency logs, and peer authentication through mTLS or DPoP."
+>
+  <PageIntro
+    eyebrow="How it works"
+    title="From a domain name to a verifiable peer."
+    description="ANS combines domain control, certificates, and a transparency log. Each part answers a specific question about the agent you are about to interact with."
+  />
+  <section class="container content-section split-content">
+    <div>
+      <p class="eyebrow">The lifecycle</p>
+      <h2>
+        Register. Publish.
+        <br />
+        Discover. Verify.
+      </h2>
+      <p>
+        The agent operator, Registration Authority, and Transparency Log have
+        distinct roles. DNS helps peers find the evidence.
+      </p>
+      <div class="callout">
+        <strong>A name for a specific registration</strong>
+        <code>ans://v1.0.0.payments.example.com</code>
+        <p>
+          The version and domain identify the registration. A new version is a
+          new registration.
+        </p>
+      </div>
+    </div>
+    <ol class="flow-list">
+      <li>
+        <h3>Prove control and register</h3>
+        <p>
+          The operator submits an agent host, version, endpoints, and
+          certificate material to a Registration Authority. The RA verifies
+          domain control and the required proofs.
+        </p>
+      </li>
+      <li>
+        <h3>Publish the required DNS records</h3>
+        <p>
+          The RA returns the records to publish. The operator provisions them
+          with their DNS provider; the RA checks the required records before
+          activation.
+        </p>
+      </li>
+      <li>
+        <h3>Seal the lifecycle event</h3>
+        <p>
+          The RA signs the event and the Transparency Log seals it before
+          activation succeeds. Public verification artifacts bind the
+          registration to its authorized certificates.
+        </p>
+      </li>
+      <li>
+        <h3>Discover the endpoint and evidence</h3>
+        <p>
+          Peers use a supported discovery profile to locate endpoints. The
+          shared <code>_ans-badge</code> record locates the registration’s badge
+          in its Transparency Log.
+        </p>
+      </li>
+      <li>
+        <h3>Authenticate, then apply policy</h3>
+        <p>
+          Check identity, current status, and key possession. The application
+          then applies its own permissions and risk policy before allowing an
+          action.
+        </p>
+      </li>
+    </ol>
+  </section>
+  <section class="container content-section">
+    <h2>Three proofs. One authenticated identity.</h2>
+    <div class="three-columns principles">
+      <article>
+        <span class="step-number">01</span>
+        <h3>Identity</h3>
+        <p>
+          Is this certificate bound to this agent in the transparency log? A
+          badge or a verified SCITT receipt supplies the identity evidence.
+        </p>
+      </article>
+      <article>
+        <span class="step-number">02</span>
+        <h3>Current status</h3>
+        <p>
+          Is the registration still valid? An online badge or a short-lived
+          signed status token supplies lifecycle information with bounded
+          freshness.
+        </p>
+      </article>
+      <article>
+        <span class="step-number">03</span>
+        <h3>Possession</h3>
+        <p>
+          Does this peer hold the private key? Public badges and receipts alone
+          cannot authenticate the caller. The peer must prove possession.
+        </p>
+      </article>
+    </div>
+  </section>
+  <section class="container content-section">
+    <h2>Choose the proof that fits your connection.</h2>
+    <p>
+      ANS-6 defines two caller authentication methods with equal standing in the
+      published specification. Both require identity and current-status checks.
+    </p>
+    <div class="two-columns" style="margin-top: 28px">
+      <article class="feature-block">
+        <p class="eyebrow">Method A</p>
+        <h3>Mutual TLS</h3>
+        <p>
+          The caller presents its ANS Identity Certificate during the TLS
+          handshake. This fits a connection where the peer’s TLS identity
+          reaches the verifier.
+        </p>
+        <p>Can use online badge verification or SCITT artifacts.</p>
+      </article>
+      <article class="feature-block">
+        <p class="eyebrow">Method B</p>
+        <h3>Application-layer DPoP</h3>
+        <p>
+          The caller sends a signed, single-use proof bound to the request
+          method, URL, and content. It can pass through gateways that terminate
+          TLS.
+        </p>
+        <p>Uses a SCITT receipt and status token, with replay protection.</p>
+      </article>
+    </div>
+    <p class="section-note">
+      Callee verification also binds the actual TLS server certificate to the
+      registration.{' '}
+      <a href={`${specification}/blob/main/spec/ans-6-agent-authentication.md`}>
+        Read the full ANS-6 verification procedures ↗
+      </a>
+    </p>
+  </section>
+  <section class="container content-section">
+    <h2>DNS is discovery, with verifiable bindings.</h2>
+    <p>
+      The current V2 registration model defaults to <code>ANS_DNSAID</code>.{' '}
+      <code>ANS_TXT</code> is an explicit option. Publish the records returned
+      by your RA, including their required flags.
+    </p>
+    <div class="table-wrap" style="margin-top: 25px">
+      <table>
+        <caption class="eyebrow" style="text-align:left;margin-bottom:15px">
+          Published discovery profiles
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Record</th>
+            <th scope="col">Location</th>
+            <th scope="col">Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">ANS_DNSAID</th>
+            <td>
+              SVCB at <code>agentHost</code>
+            </td>
+            <td>Per-endpoint discovery hints. The default V2 profile.</td>
+          </tr>
+          <tr>
+            <th scope="row">ANS_TXT</th>
+            <td>
+              <code>_ans.agentHost</code>
+            </td>
+            <td>
+              TXT discovery records; opt-in on V2 and used by the V1 lane.
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Badge</th>
+            <td>
+              <code>_ans-badge.agentHost</code>
+            </td>
+            <td>Required, shared link to the Transparency Log badge.</td>
+          </tr>
+          <tr>
+            <th scope="row">Server DANE</th>
+            <td>
+              <code>_port._tcp.agentHost</code>
+            </td>
+            <td>
+              Optional TLSA record. A DNSSEC-authenticated mismatch must not be
+              accepted.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="section-note">
+      <a href={`${specification}/blob/main/spec/ans-3-dns-publication.md`}>
+        DNS publication and profile details ↗
+      </a>
+    </p>
+  </section>
+  <section class="container content-section split-content">
+    <div>
+      <p class="eyebrow">Trust boundaries</p>
+      <h2>Evidence has a scope.</h2>
+    </div>
+    <div>
+      <p>
+        ANS verifies domain-anchored agent identity. Optional Verified
+        Identities can add a separately proven identity relationship where the
+        RA supports them.
+      </p>
+      <p>
+        Sealed metadata digests can bind published metadata to a registration.
+        They do not attest the code executing on a remote machine or guarantee
+        an agent’s behavior.
+      </p>
+      <p>
+        Transparency makes records auditable. Clients still need trusted log
+        keys, correct signature and proof verification, freshness checks, and a
+        policy for failures.
+      </p>
+      <p>
+        ANS authentication does not authorize an action or delegate a user’s
+        permissions. Trust scoring is a separate project, not an ANS
+        authentication tier.
+      </p>
+      <a class="text-link" style="margin-top:25px" href={url('docs/')}>
+        Read the specifications <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,138 @@
+---
+import '../styles/global.css';
+import Mark from '../components/Mark.astro';
+import { navigation, organization, specification, url } from '../data/site';
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+}
+const { title, description, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f5f5ee" />
+    <meta name="generator" content={Astro.generator} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={url('favicon.svg')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Agent Name Service" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta
+      property="og:image"
+      content={new URL(url('social.png'), Astro.site)}
+    />
+    <meta
+      property="og:image:alt"
+      content="ANS — Verifiable identity for AI agents"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>{title} · Agent Name Service</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href={url('')} aria-label="ANS — home">
+          <Mark />
+          <span>
+            ANS<small>Agent Name Service</small>
+          </span>
+        </a>
+        <nav class="desktop-nav" aria-label="Main navigation">
+          {navigation.map((item) => (
+            <a
+              href={url(item.path)}
+              aria-current={
+                Astro.url.pathname === url(item.path) ? 'page' : undefined
+              }
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <a class="header-github" href={organization}>
+          GitHub <span aria-hidden="true">↗</span>
+        </a>
+        <details class="mobile-nav">
+          <summary>
+            Menu <span aria-hidden="true">＋</span>
+          </summary>
+          <nav aria-label="Mobile navigation">
+            {navigation.map((item) => (
+              <a
+                href={url(item.path)}
+                aria-current={
+                  Astro.url.pathname === url(item.path) ? 'page' : undefined
+                }
+              >
+                {item.label}
+              </a>
+            ))}
+            <a href={organization}>GitHub ↗</a>
+          </nav>
+        </details>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand" href={url('')}>
+            <Mark />
+            <span>
+              ANS<small>Agent Name Service</small>
+            </span>
+          </a>
+          <p>
+            Verifiable identity for an
+            <br />
+            open agent ecosystem.
+          </p>
+        </div>
+        <div>
+          <h2>Explore</h2>
+          <a href={url('about/')}>About ANS</a>
+          <a href={url('how-it-works/')}>How it works</a>
+        </div>
+        <div>
+          <h2>Build</h2>
+          <a href={url('for-developers/')}>Get started</a>
+          <a href={url('docs/')}>Specifications</a>
+          <a href={url('ecosystem/')}>Implementations</a>
+        </div>
+        <div>
+          <h2>Participate</h2>
+          <a href={url('community/')}>Community</a>
+          <a href={`${specification}/blob/main/CONTRIBUTING.md`}>
+            Contribution guide ↗
+          </a>
+          <a href={`${specification}/blob/main/SECURITY.md`}>
+            Report a vulnerability ↗
+          </a>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <span>Agent Name Service · An open source project</span>
+        <span>
+          <a href={url('privacy/')}>Privacy</a>
+          <span aria-hidden="true"> / </span>
+          <a href={organization}>GitHub ↗</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>
