@@ -6,6 +6,10 @@ heading: Help build ANS.
 description: Contribute code, improve the specification, test an integration, or help another developer get started. Participation is open to everyone.
 ---
 
+## General questions
+
+For general questions about ANS, email [contact@ansinfo.ai](mailto:contact@ansinfo.ai).
+
 ## Start with a contribution
 
 - **Improve the specification.** Report an ambiguity, discuss a requirement, or
