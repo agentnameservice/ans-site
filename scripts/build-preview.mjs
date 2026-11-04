@@ -3,10 +3,7 @@ import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { designs } from '../src/data/designs.ts';
 
-const root = new URL(
-  process.env.PREVIEW_URL ||
-    'https://agentnameservice.github.io/ans-site-preview/',
-);
+const root = new URL(process.env.PREVIEW_URL || 'http://127.0.0.1:8080/');
 if (!root.pathname.endsWith('/')) root.pathname += '/';
 const out = process.env.PREVIEW_DIR || 'dist-preview';
 const run = (script, args, env) =>
@@ -40,4 +37,9 @@ writeFileSync(
   `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>ANS design preview</title><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=${first}"><link rel="canonical" href="${first}"></head><body><p><a href="${first}">Open the design preview</a>.</p></body></html>\n`,
 );
 writeFileSync(join(out, '.nojekyll'), '');
-console.log(`\nPreview written to ${out}/ with ${designs.length} designs.`);
+console.log(
+  `\nPreview written to ${out}/ with ${designs.length} designs for ${root.href}`,
+);
+if (root.hostname === '127.0.0.1') {
+  console.log('Serve it with: npm run preview:designs');
+}

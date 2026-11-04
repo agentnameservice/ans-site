@@ -42,14 +42,16 @@ SITE_DESIGN=cobalt npm run dev
 
 `npm run build:preview` builds every design into `dist-preview/<design>/` with a
 switcher bar at the top of each page, marks the pages `noindex`, and validates
-each build. `PREVIEW_URL` sets the preview site's root (default
-`https://agentnameservice.github.io/ans-site-preview/`). To browse the result
-locally:
+each build. The pages are built for `PREVIEW_URL`, which defaults to the local
+preview server, so to browse the result locally:
 
 ```sh
-PREVIEW_URL=http://127.0.0.1:8080/ npm run build:preview
+npm run build:preview
 npm run preview:designs
 ```
+
+Then open `http://127.0.0.1:8080/`. The deployment workflow sets `PREVIEW_URL`
+to the published preview site's root.
 
 Pushes to the `design/three-directions` branch run
 `.github/workflows/preview.yml`, which publishes `dist-preview/` to the

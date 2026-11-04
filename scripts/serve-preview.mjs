@@ -4,6 +4,10 @@ import { extname, join, normalize } from 'node:path';
 
 const dir = process.env.PREVIEW_DIR || 'dist-preview';
 const port = Number(process.env.PORT || 8080);
+if (!existsSync(dir)) {
+  console.error(`${dir}/ does not exist. Run: npm run build:preview`);
+  process.exit(1);
+}
 const types = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -47,6 +51,16 @@ createServer((req, res) => {
     'Content-Type': types[extname(file)] || 'application/octet-stream',
   });
   createReadStream(file).pipe(res);
-}).listen(port, '127.0.0.1', () => {
-  console.log(`Serving ${dir}/ at http://127.0.0.1:${port}/`);
-});
+})
+  .on('error', (error) => {
+    if (error.code === 'EADDRINUSE') {
+      console.error(
+        `Port ${port} is already in use, so a preview server may already be running at http://127.0.0.1:${port}/. Set PORT to use another port.`,
+      );
+      process.exit(1);
+    }
+    throw error;
+  })
+  .listen(port, '127.0.0.1', () => {
+    console.log(`Serving ${dir}/ at http://127.0.0.1:${port}/`);
+  });
