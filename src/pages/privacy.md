@@ -14,7 +14,8 @@ browser and operating system family, the screen width, the language, and an
 approximate location derived from the IP address. It does not store IP
 addresses, full browser identifiers, or any tracker ID, and it does not set
 cookies or store anything in the browser. Repeat visits are grouped for up to
-eight hours in memory only, without a persistent identifier.
+eight hours in memory only, without a persistent identifier. When JavaScript is
+disabled, a one-pixel image request reports the page path only.
 
 GoatCounter is open source and operated by Martin Tournoij in Ireland, with
 servers hosted by Hetzner Online GmbH in Finland and Germany. The statistics stay

@@ -41,12 +41,17 @@ const analytics =
     <meta name="twitter:card" content="summary_large_image" />
     <title>{title} · Agent Name Service</title>
     {analytics && (
-      <script
-        is:inline
-        data-goatcounter={analytics}
-        async
-        src="https://gc.zgo.at/count.js"
-      ></script>
+      <>
+        <script
+          is:inline
+          data-goatcounter={analytics}
+          async
+          src="https://gc.zgo.at/count.js"
+        ></script>
+        <noscript>
+          <img src={`${analytics}?p=${Astro.url.pathname}`} alt="" />
+        </noscript>
+      </>
     )}
   </head>
   <body>

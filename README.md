@@ -51,8 +51,9 @@ Page views are counted with [GoatCounter](https://www.goatcounter.com/) when
 `SITE_ANALYTICS_ID` repository variable under **Settings → Secrets and
 variables → Actions → Variables**. When the variable is unset, the default, the
 build emits no analytics script and `npm test` fails if any script is present.
-When it is set, `npm test` requires exactly that GoatCounter script on every page
-and still rejects any other script.
+When it is set, `npm test` requires exactly that GoatCounter script, plus a
+`noscript` image fallback that reports only the page path, on every page and
+still rejects any other script.
 
 ```sh
 SITE_ANALYTICS_ID=ansinfo npm run build
