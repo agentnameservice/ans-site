@@ -1,0 +1,23 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PageHead from '../PageHead.astro';
+import { url } from '../../../data/site';
+---
+
+<Base
+  title="Page not found"
+  description="Find your way back to the Agent Name Service website."
+  noindex
+>
+  <PageHead
+    title="Let’s find the right starting point."
+    description="This page may have moved. Explore the specification, find a developer guide, or return to the homepage."
+  >
+    <a class="key key--primary" href={url('')}>
+      Back to home
+    </a>
+    <a class="key" href={url('docs/')}>
+      Browse the docs
+    </a>
+  </PageHead>
+</Base>

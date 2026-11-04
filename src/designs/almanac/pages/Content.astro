@@ -1,0 +1,41 @@
+---
+import type { MarkdownHeading } from 'astro';
+interface Props {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  headings?: MarkdownHeading[];
+}
+const { heading: rawHeading, description, headings = [] } = Astro.props;
+const heading = rawHeading.replace(/\.$/, '');
+const contents = headings.filter((h) => h.depth === 2);
+---
+
+<div class="content-page">
+  <section class="container page-head">
+    <div class="grid page-head-grid">
+      <h1 class="c-1-7">{heading}</h1>
+      <p class="lead c-8-12">{description}</p>
+    </div>
+  </section>
+  <hr class="page-rule container" />
+  <div class="container grid prose-grid">
+    {contents.length > 1 && (
+      <nav class="on-page" aria-label="On this page">
+        <p>On this page</p>
+        <ol>
+          {contents.map((h) => (
+            <li>
+              <a href={`#${h.slug}`} title={h.text}>
+                {h.text}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
+    <article class="prose">
+      <slot />
+    </article>
+  </div>
+</div>

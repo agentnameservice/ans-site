@@ -1,0 +1,180 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PageHead from '../PageHead.astro';
+import { specs, specification, organization, url } from '../../../data/site';
+---
+
+<Base
+  title="Specifications and documentation"
+  description="Find the seven ANS specification layers, discovery profiles, API contracts, worked examples, SDKs, and security analysis."
+>
+  <PageHead
+    title="The specification is the source of truth."
+    description="ANS is defined in seven layers, with separate API contracts and worked examples. Use the canonical documents for normative requirements."
+  >
+    <a class="key key--primary" href={`${specification}/tree/main/spec`}>
+      Browse the specification
+    </a>
+    <a class="key" href={url('for-developers/')}>
+      New to ANS? Start here
+    </a>
+  </PageHead>
+  <section class="page-section">
+    <div class="container">
+      <h2>Seven layers, from identity to authentication</h2>
+      <div
+        class="table-wrap body-block"
+        tabindex="0"
+        role="region"
+        aria-label="Specification layers"
+      >
+        <table class="ruled-table">
+          <caption class="visually-hidden">ANS specification layers</caption>
+          <thead>
+            <tr>
+              <th scope="col">Layer</th>
+              <th scope="col">Title</th>
+              <th scope="col">Covers</th>
+              <th scope="col">Document</th>
+            </tr>
+          </thead>
+          <tbody>
+            {specs.map((spec) => (
+              <tr>
+                <th scope="row">
+                  <span class="mono layer">{spec.id}</span>
+                </th>
+                <td data-label="Title">{spec.title}</td>
+                <td data-label="Covers">{spec.description}</td>
+                <td data-label="Document">
+                  <a
+                    class="text-link nowrap"
+                    href={`${specification}/blob/main/spec/${spec.file}`}
+                    aria-label={`Read ${spec.id} ${spec.title}`}
+                  >
+                    Read {spec.id}
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="page-note">
+        The specifications are drafts under active development. The links above
+        point to the current documents in the specification repository.
+      </p>
+    </div>
+  </section>
+  <section class="page-section page-well">
+    <div class="container">
+      <h2>Implement the contract</h2>
+      <ul class="pair pair-list">
+        <li class="cut">
+          <h3>API definitions</h3>
+          <p>
+            Machine-readable OpenAPI definitions for the Registration Authority
+            and Transparency Log, plus the V2 event schemas.
+          </p>
+          <ul class="link-stack">
+            <li>
+              <a
+                class="text-link"
+                href={`${specification}/blob/main/api/api-spec-v2.yaml`}
+              >
+                Registration API
+              </a>
+            </li>
+            <li>
+              <a
+                class="text-link"
+                href={`${specification}/blob/main/api/api-spec-tl-v2.yaml`}
+              >
+                Transparency Log API
+              </a>
+            </li>
+            <li>
+              <a class="text-link" href={`${specification}/tree/main/api`}>
+                Event and response schemas
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="cut">
+          <h3>Worked examples</h3>
+          <p>
+            Read registration, transparency, integrity-monitoring, and
+            authentication examples alongside their specifications.
+          </p>
+          <ul class="link-stack">
+            <li>
+              <a
+                class="text-link"
+                href={`${specification}/tree/main/spec/examples`}
+              >
+                Protocol examples
+              </a>
+            </li>
+            <li>
+              <a class="text-link" href={`${organization}/ans`}>
+                Runnable reference implementation
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="cut">
+          <h3>Profiles</h3>
+          <p>
+            DNS publication profiles define discovery records. Optional identity
+            profiles define additional proofs and their verification
+            requirements.
+          </p>
+          <ul class="link-stack">
+            <li>
+              <a
+                class="text-link"
+                href={`${specification}/tree/main/spec/discovery-profiles`}
+              >
+                Discovery profiles
+              </a>
+            </li>
+            <li>
+              <a
+                class="text-link"
+                href={`${specification}/tree/main/spec/identity-profiles`}
+              >
+                Identity profiles
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="cut">
+          <h3>Security</h3>
+          <p>
+            The MAESTRO analysis maps threats and mitigations across the
+            architecture. Each protocol layer also includes its security
+            considerations.
+          </p>
+          <ul class="link-stack">
+            <li>
+              <a
+                class="text-link"
+                href={`${specification}/blob/main/MAESTRO.md`}
+              >
+                Security analysis
+              </a>
+            </li>
+            <li>
+              <a
+                class="text-link"
+                href={`${specification}/blob/main/SECURITY.md`}
+              >
+                Vulnerability reporting
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+</Base>

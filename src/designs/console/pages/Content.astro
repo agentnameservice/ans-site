@@ -1,0 +1,32 @@
+---
+import type { MarkdownHeading } from 'astro';
+import PageIntro from '../PageIntro.astro';
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  headings?: MarkdownHeading[];
+}
+const { heading, description, headings = [] } = Astro.props;
+const sections = headings.filter((item) => item.depth === 2);
+---
+
+<PageIntro title={heading} description={description} />
+<div class="container prose-wrap">
+  {sections.length > 1 && (
+    <nav class="on-page" aria-label="On this page">
+      <p>On this page</p>
+      <ol>
+        {sections.map((item) => (
+          <li>
+            <a href={`#${item.slug}`}>{item.text}</a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  )}
+  <article class="prose">
+    <slot />
+  </article>
+</div>

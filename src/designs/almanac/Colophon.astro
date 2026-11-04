@@ -1,0 +1,77 @@
+---
+import { organization, specification, url } from '../../data/site';
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="grid closing-statement">
+      <div class="c-1-7">
+        <p>
+          ANS establishes identity. Applications still decide what a peer may
+          do.
+        </p>
+        <a class="link-action" href={url('how-it-works/')}>
+          How verification works
+        </a>
+      </div>
+    </div>
+    <div class="grid colophon">
+      <p class="colophon-note c-1-4">
+        Agent Name Service, an open source project. Contact{' '}
+        <a href="mailto:contact@ansinfo.ai">contact@ansinfo.ai</a>.
+      </p>
+      <div class="colophon-groups c-5-12">
+        <div>
+          <h2>Explore</h2>
+          <ul>
+            <li>
+              <a href={url('about/')}>About ANS</a>
+            </li>
+            <li>
+              <a href={url('how-it-works/')}>How it works</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h2>Build</h2>
+          <ul>
+            <li>
+              <a href={url('for-developers/')}>Get started</a>
+            </li>
+            <li>
+              <a href={url('docs/')}>Specifications</a>
+            </li>
+            <li>
+              <a href={url('ecosystem/')}>Implementations</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h2>Participate</h2>
+          <ul>
+            <li>
+              <a href={url('community/')}>Community</a>
+            </li>
+            <li>
+              <a href="mailto:contact@ansinfo.ai">contact@ansinfo.ai</a>
+            </li>
+            <li>
+              <a href={`${specification}/blob/main/CONTRIBUTING.md`}>
+                Contribution guide
+              </a>
+            </li>
+            <li>
+              <a href={`${specification}/blob/main/SECURITY.md`}>
+                Report a vulnerability
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="colophon-base">
+      <a href={url('privacy/')}>Privacy</a>
+      <a href={organization}>GitHub</a>
+    </p>
+  </div>
+</footer>

@@ -1,0 +1,7 @@
+---
+const Bar = import.meta.env.SITE_DESIGN_PREVIEW
+  ? (await import('./DesignSwitchBar.astro')).default
+  : null;
+---
+
+{Bar && <Bar />}

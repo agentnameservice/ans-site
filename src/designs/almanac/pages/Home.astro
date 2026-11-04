@@ -1,0 +1,241 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { url, organization, sdks } from '../../../data/site';
+---
+
+<Base
+  title="Verifiable identity for AI agents"
+  description="Agent Name Service is an open specification for naming, discovering, and authenticating AI agents. Read the specification, try an implementation, or contribute."
+>
+  <section class="container hero">
+    <div class="grid hero-grid">
+      <div class="hero-copy c-1-6">
+        <h1>Verifiable identity for AI agents</h1>
+        <p class="lead">
+          Domain names, certificates, and transparency records let peers verify
+          identity.
+        </p>
+        <div class="actions">
+          <a class="btn btn--primary" href={url('docs/')}>
+            Read the specification
+          </a>
+          <a class="btn" href={url('for-developers/')}>
+            Try an implementation
+          </a>
+        </div>
+      </div>
+      <figure class="hero-sheet sheet c-7-12">
+        <div class="sheet-head">
+          <h2 class="sheet-title">Verification record</h2>
+        </div>
+        <dl class="sheet-ids">
+          <div>
+            <dt>Name</dt>
+            <dd>ans://v1.0.0.payments.example.com</dd>
+          </div>
+          <div>
+            <dt>Badge</dt>
+            <dd>_ans-badge.payments.example.com</dd>
+          </div>
+        </dl>
+        <div class="table-wrap sheet-checks">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Check</th>
+                <th scope="col">Evidence</th>
+                <th scope="col">Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Identity</th>
+                <td data-label="Evidence">Transparency log badge</td>
+                <td data-label="Result">Bound to a domain</td>
+              </tr>
+              <tr>
+                <th scope="row">Status</th>
+                <td data-label="Evidence">Signed status token</td>
+                <td data-label="Result">Registration is current</td>
+              </tr>
+              <tr class="points">
+                <th scope="row">Possession</th>
+                <td data-label="Evidence">TLS handshake or DPoP proof</td>
+                <td data-label="Result">Key holder authenticated</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="sheet-ledger">
+          <h3>Lifecycle</h3>
+          <ol>
+            <li>Registered</li>
+            <li>DNS verified by the RA</li>
+            <li>Sealed, SCITT receipt</li>
+            <li>Active</li>
+          </ol>
+        </div>
+        <div class="sheet-footrow">
+          <p class="sheet-foot">
+            Domain, transparency log, peer: three parties, one identity you can
+            check.
+          </p>
+          <figcaption class="sheet-note">Illustrative example</figcaption>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section
+    class="section section--s section--after-hero"
+    id="watch"
+    aria-labelledby="video-heading"
+  >
+    <div class="container">
+      <h2 id="video-heading">What is ANS?</h2>
+      <p class="head-line" id="video-summary">
+        A short introduction to agent identity and why it matters when AI agents
+        interact.
+      </p>
+      <figure class="sheet video-sheet">
+        <video
+          controls
+          playsinline
+          preload="none"
+          width="1920"
+          height="1080"
+          poster={url('videos/ans-explainer-poster.jpg')}
+          aria-labelledby="video-heading"
+          aria-describedby="video-summary"
+        >
+          <source src={url('videos/ans-explainer.mp4')} type="video/mp4" />
+          <track
+            kind="captions"
+            src={url('videos/ans-explainer.en.vtt')}
+            srclang="en"
+            label="English"
+          />
+          <p>
+            <a href={url('videos/ans-explainer.mp4')}>
+              Download the ANS overview
+            </a>
+            to watch it in your video player.
+          </p>
+        </video>
+        <figcaption class="video-cap">
+          <span>1 min 52 sec</span>
+          <span>English captions available</span>
+          <a href={url('how-it-works/')}>How ANS works</a>
+          <a href={url('videos/ans-explainer.mp4')} download>
+            Download video
+          </a>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section--s section--tight-top">
+    <div class="container grid build-table">
+      <div class="c-1-4">
+        <h2>Build with ANS</h2>
+        <p class="head-line">
+          Run the Registration Authority and Transparency Log locally, then
+          verify a receipt. Use an SDK to bring verification into your
+          application.
+        </p>
+      </div>
+      <div class="c-5-12">
+        <div class="sheet">
+          <div
+            class="table-wrap"
+            tabindex="0"
+            role="region"
+            aria-label="Implementations"
+          >
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Repository</th>
+                  <th scope="col">Contents</th>
+                  <th scope="col">Scope</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">ans</th>
+                  <td data-label="Repository" class="mono-cell">
+                    <a href={`${organization}/ans`}>ans</a>
+                  </td>
+                  <td data-label="Contents">
+                    Registration Authority, Transparency Log, offline verifier
+                    (Go)
+                  </td>
+                  <td data-label="Scope">Reference implementation</td>
+                </tr>
+                {sdks.map((sdk) => (
+                  <tr>
+                    <th scope="row">{sdk.name}</th>
+                    <td data-label="Repository" class="mono-cell">
+                      <a href={`${organization}/${sdk.repo}`}>{sdk.repo}</a>
+                    </td>
+                    <td data-label="Contents">{sdk.detail}</td>
+                    <td data-label="Scope">{sdk.label}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p class="after-link">
+          <a class="link-action" href={url('ecosystem/')}>
+            Browse implementations
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band--ink section section--s">
+    <div class="container grid band-grid">
+      <div class="c-1-8">
+        <h2>Run it on your machine</h2>
+        <pre class="cmds"><code><span class="line"><span class="verb">git</span> clone https://github.com/agentnameservice/ans</span><span class="line">cd ans</span><span class="line"><span class="verb">make</span> build</span><span class="line"><span class="verb">scripts/demo/start.sh</span></span><span class="line"><span class="verb">scripts/demo/run-lifecycle.sh</span></span></code></pre>
+      </div>
+      <div class="c-9-12 band-copy">
+        <p class="band-note">
+          Five lines register an agent and verify its receipt on your machine.
+          Look for VERIFIED.
+        </p>
+        <div class="actions">
+          <a class="btn btn--on-ink" href={url('for-developers/')}>
+            Get started
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--s">
+    <div class="container">
+      <div class="well grid">
+        <h2 class="c-1-5">Participate in the project</h2>
+        <div class="c-7-12">
+          <p>
+            ANS develops through public specifications, code, and discussion.
+            Contributions to code, documentation, testing, and integrations are
+            welcome.
+          </p>
+          <div class="actions participate-actions">
+            <a class="btn" href={url('community/')}>
+              How to contribute
+            </a>
+            <a class="btn" href={organization}>
+              Find a project
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

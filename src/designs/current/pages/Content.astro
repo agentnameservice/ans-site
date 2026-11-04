@@ -1,0 +1,19 @@
+---
+import type { MarkdownHeading } from 'astro';
+import PageIntro from '../PageIntro.astro';
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  headings?: MarkdownHeading[];
+}
+const { eyebrow, heading, description } = Astro.props;
+---
+
+<PageIntro eyebrow={eyebrow} title={heading} description={description} />
+<div class="container content-section">
+  <article class="prose">
+    <slot />
+  </article>
+</div>

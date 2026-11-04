@@ -1,0 +1,26 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { url } from '../../../data/site';
+---
+
+<Base
+  title="Page not found"
+  description="Find your way back to the Agent Name Service website."
+  noindex
+>
+  <section class="container lost">
+    <h1>Let’s find the right starting point</h1>
+    <p class="lead">
+      This page may have moved. Explore the specification, find a developer
+      guide, or return to the homepage.
+    </p>
+    <div class="actions">
+      <a class="btn btn--primary" href={url('')}>
+        Back to home
+      </a>
+      <a class="btn" href={url('docs/')}>
+        Browse the docs
+      </a>
+    </div>
+  </section>
+</Base>

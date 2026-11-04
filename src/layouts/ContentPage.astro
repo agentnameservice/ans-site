@@ -1,6 +1,7 @@
 ---
+import type { MarkdownHeading } from 'astro';
 import Base from './Base.astro';
-import PageIntro from '../components/PageIntro.astro';
+import Content from '@design-pages/Content.astro';
 
 interface Props {
   frontmatter: {
@@ -10,21 +11,21 @@ interface Props {
     description: string;
     noindex?: boolean;
   };
+  headings: MarkdownHeading[];
 }
 const {
-  title,
-  eyebrow,
-  heading,
-  description,
-  noindex = false,
-} = Astro.props.frontmatter;
+  frontmatter: { title, eyebrow, heading, description, noindex = false },
+  headings,
+} = Astro.props;
 ---
 
 <Base title={title} description={description} noindex={noindex}>
-  <PageIntro eyebrow={eyebrow} title={heading} description={description} />
-  <div class="container content-section">
-    <article class="prose">
-      <slot />
-    </article>
-  </div>
+  <Content
+    eyebrow={eyebrow}
+    heading={heading}
+    description={description}
+    headings={headings}
+  >
+    <slot />
+  </Content>
 </Base>

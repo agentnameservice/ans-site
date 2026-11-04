@@ -1,0 +1,78 @@
+---
+import '@fontsource-variable/hanken-grotesk/index.css';
+import '@fontsource-variable/newsreader/index.css';
+import '@fontsource-variable/newsreader/wght-italic.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import './styles.css';
+import Mark from '../../components/Mark.astro';
+import DesignSwitch from '../../components/DesignSwitch.astro';
+import Nav from './Nav.astro';
+import Colophon from './Colophon.astro';
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+}
+import { url } from '../../data/site';
+const { title, description, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#c3c9d1" />
+    <meta name="generator" content={Astro.generator} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={url('favicon.svg')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Agent Name Service" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta
+      property="og:image"
+      content={new URL(url('social.png'), Astro.site)}
+    />
+    <meta
+      property="og:image:alt"
+      content="ANS: verifiable identity for AI agents"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>{title} · Agent Name Service</title>
+  </head>
+  <body>
+    {import.meta.env.SITE_DESIGN_PREVIEW && <DesignSwitch />}
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <header class="site-header">
+      <div class="banner">
+        <div class="container banner-inner">
+          <p>
+            The published specifications are drafts under active development.
+            <a href={url('docs/')}>Read the specification</a>
+          </p>
+        </div>
+      </div>
+      <div class="bar">
+        <div class="container bar-inner">
+          <a class="brand" href={url('')} aria-label="ANS home">
+            <Mark />
+            <span>ANS</span>
+          </a>
+          <Nav pathname={Astro.url.pathname} />
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <Colophon />
+  </body>
+</html>

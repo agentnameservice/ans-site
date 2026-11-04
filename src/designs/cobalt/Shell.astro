@@ -1,0 +1,159 @@
+---
+import '@fontsource-variable/familjen-grotesk/index.css';
+import '@fontsource/ibm-plex-sans/400.css';
+import '@fontsource/ibm-plex-sans/500.css';
+import '@fontsource-variable/jetbrains-mono/index.css';
+import './styles.css';
+import Mark from '../../components/Mark.astro';
+import DesignSwitch from '../../components/DesignSwitch.astro';
+import { navigation, organization, specification, url } from '../../data/site';
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+}
+const { title, description, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const links = navigation.map((item) => ({
+  label: item.label,
+  href: url(item.path),
+  current: Astro.url.pathname === url(item.path),
+}));
+const groups = [
+  {
+    heading: 'Explore',
+    links: [
+      { label: 'About ANS', href: url('about/') },
+      { label: 'How it works', href: url('how-it-works/') },
+    ],
+  },
+  {
+    heading: 'Build',
+    links: [
+      { label: 'Get started', href: url('for-developers/') },
+      { label: 'Specifications', href: url('docs/') },
+      { label: 'Implementations', href: url('ecosystem/') },
+    ],
+  },
+  {
+    heading: 'Participate',
+    links: [
+      { label: 'Community', href: url('community/') },
+      { label: 'contact@ansinfo.ai', href: 'mailto:contact@ansinfo.ai' },
+      {
+        label: 'Contribution guide',
+        href: `${specification}/blob/main/CONTRIBUTING.md`,
+      },
+      {
+        label: 'Report a vulnerability',
+        href: `${specification}/blob/main/SECURITY.md`,
+      },
+    ],
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f9fafd" />
+    <meta name="generator" content={Astro.generator} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={url('favicon.svg')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Agent Name Service" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta
+      property="og:image"
+      content={new URL(url('social.png'), Astro.site)}
+    />
+    <meta
+      property="og:image:alt"
+      content="ANS: verifiable identity for AI agents"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>{title} · Agent Name Service</title>
+  </head>
+  <body>
+    {import.meta.env.SITE_DESIGN_PREVIEW && <DesignSwitch />}
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <header class="slab">
+      <div class="container slab-inner">
+        <a class="brand" href={url('')} aria-label="ANS, home">
+          <Mark />
+          <span>ANS</span>
+        </a>
+        <nav class="slab-nav" aria-label="Main">
+          {links.map((item) => (
+            <a
+              href={item.href}
+              aria-current={item.current ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <a class="key key--small slab-github" href={organization}>
+          GitHub
+        </a>
+        <details class="menu">
+          <summary class="key key--small">Menu</summary>
+          <nav aria-label="Mobile">
+            {links.map((item) => (
+              <a
+                href={item.href}
+                aria-current={item.current ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            ))}
+            <a href={organization}>GitHub</a>
+          </nav>
+        </details>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="mast">
+      <div class="container">
+        <div class="mast-head">
+          <a class="mast-brand" href={url('')} aria-label="ANS, home">
+            <Mark />
+            <span>ANS</span>
+          </a>
+          <p>Verifiable identity for an open agent ecosystem.</p>
+        </div>
+        <div class="mast-groups">
+          {groups.map((group) => (
+            <div>
+              <h2>{group.heading}</h2>
+              <ul>
+                {group.links.map((link) => (
+                  <li>
+                    <a href={link.href}>{link.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div class="mast-base">
+          <p>Agent Name Service, an open source project</p>
+          <p>
+            <a href={url('privacy/')}>Privacy</a>
+            <a href={organization}>GitHub</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

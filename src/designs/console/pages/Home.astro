@@ -1,0 +1,222 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { url, organization, sdks } from '../../../data/site';
+
+const trail = [
+  {
+    event: 'Registered',
+    actor: 'Operator',
+    person: true,
+    value: 'v1.0.0',
+  },
+  {
+    event: 'DNS records verified',
+    actor: 'Registration Authority',
+    value: '_ans-badge.payments.example.com',
+  },
+  {
+    event: 'Sealed in the transparency log',
+    actor: 'Transparency Log',
+    value: 'receipt: SCITT',
+  },
+  { event: 'Active', actor: 'Registration Authority', value: 'status: ACTIVE' },
+];
+const checks = [
+  { name: 'Identity', reading: 'bound to a domain' },
+  { name: 'Status', reading: 'registration is current' },
+  { name: 'Possession', reading: 'key holder authenticated' },
+];
+---
+
+<Base
+  title="Verifiable identity for AI agents"
+  description="Agent Name Service is an open specification for naming, discovering, and authenticating AI agents. Read the specification, try an implementation, or contribute."
+>
+  <section class="container hero">
+    <div class="hero-copy">
+      <h1>Verifiable identity for AI agents</h1>
+      <p class="lead">
+        An open specification for naming, discovering, and authenticating AI
+        agents.
+      </p>
+      <div class="actions">
+        <a class="btn btn--primary" href={url('docs/')}>
+          Read the specification
+        </a>
+        <a class="btn btn--quiet" href={url('for-developers/')}>
+          Try an implementation
+        </a>
+      </div>
+      <p class="note">
+        The published specifications are drafts under active development.
+      </p>
+    </div>
+    <figure class="trail-figure" aria-label="Lifecycle of one ANS registration">
+      <div class="trail">
+        <div class="trail-head">
+          <p class="trail-title">payments.example.com</p>
+          <p class="measured">ans://v1.0.0.payments.example.com</p>
+        </div>
+        <ol class="trail-list">
+          {trail.map((entry) => (
+            <li>
+              <div>
+                <p class="trail-event">{entry.event}</p>
+                <p class={entry.person ? 'who' : 'actor'}>{entry.actor}</p>
+              </div>
+              <p class="measured reading-cool">{entry.value}</p>
+            </li>
+          ))}
+        </ol>
+        <dl class="checks">
+          {checks.map((check) => (
+            <div>
+              <dt>{check.name}</dt>
+              <dd>{check.reading}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <figcaption>Illustrative example</figcaption>
+    </figure>
+  </section>
+
+  <section
+    class="container section section--s section--tight"
+    id="watch"
+    aria-labelledby="video-heading"
+  >
+    <div class="stage-head">
+      <h2 id="video-heading">1. Watch what ANS is</h2>
+      <div>
+        <p id="video-summary">
+          A short introduction to agent identity and why it matters when AI
+          agents interact.
+        </p>
+        <a class="text-link" href={url('how-it-works/')}>
+          How ANS works
+        </a>
+      </div>
+    </div>
+    <figure class="screen">
+      <div class="screen-frame">
+        <video
+          controls
+          playsinline
+          preload="none"
+          width="1920"
+          height="1080"
+          poster={url('videos/ans-explainer-poster.jpg')}
+          aria-labelledby="video-heading"
+          aria-describedby="video-summary"
+        >
+          <source src={url('videos/ans-explainer.mp4')} type="video/mp4" />
+          <track
+            kind="captions"
+            src={url('videos/ans-explainer.en.vtt')}
+            srclang="en"
+            label="English"
+          />
+          <p>
+            <a href={url('videos/ans-explainer.mp4')}>
+              Download the ANS overview
+            </a>
+            to watch it in your video player.
+          </p>
+        </video>
+      </div>
+      <figcaption>
+        <span>1 min 52 sec, English captions available</span>
+        <a class="text-link" href={url('videos/ans-explainer.mp4')} download>
+          Download video
+        </a>
+      </figcaption>
+    </figure>
+  </section>
+
+  <section class="container section section--l">
+    <div class="stage-head">
+      <h2>2. Build with ANS</h2>
+      <p>
+        Run the Registration Authority and Transparency Log locally, inspect a
+        registration, and verify its receipt. Use an SDK to bring verification
+        into your application.
+      </p>
+    </div>
+    <div class="panels build-panels">
+      <article class="panel panel--lead">
+        <h3>Reference implementation</h3>
+        <p>
+          <a class="measured text-link" href={`${organization}/ans`}>
+            ans
+          </a>
+          , Go: Registration Authority, Transparency Log, offline verifier.
+        </p>
+        <pre
+          class="code"
+          tabindex="0"
+        ><code>git clone https://github.com/agentnameservice/ans
+cd ans
+make build
+scripts/demo/start.sh
+scripts/demo/run-lifecycle.sh</code></pre>
+        <p class="caption">
+          Look for <code class="measured reading-cool">VERIFIED</code> in the
+          offline-verification stage.
+        </p>
+      </article>
+      {sdks.map((sdk) => (
+        <article class="panel">
+          <h3>{sdk.name}</h3>
+          <p>
+            <a class="measured text-link" href={`${organization}/${sdk.repo}`}>
+              {sdk.repo}
+            </a>
+          </p>
+          <p>{sdk.detail}</p>
+          <p class="caption">{sdk.label}</p>
+        </article>
+      ))}
+    </div>
+    <div class="actions actions--after">
+      <a class="btn btn--quiet" href={url('for-developers/')}>
+        Get started
+      </a>
+      <a class="text-link" href={url('ecosystem/')}>
+        Browse implementations
+      </a>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container section section--s">
+      <div class="split">
+        <h2>3. Participate in the project</h2>
+        <div class="split-body">
+          <p class="band-lead">
+            ANS develops through public specifications, code, and discussion.
+            Contributions to code, documentation, testing, and integrations are
+            welcome.
+          </p>
+          <div class="actions">
+            <a class="btn btn--quiet btn--on-panel" href={url('community/')}>
+              How to contribute
+            </a>
+            <a class="text-link" href={organization}>
+              Find a project
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="close">
+        <p class="reading">
+          ANS establishes identity. Applications still decide what a peer may
+          do.
+        </p>
+        <a class="text-link" href={url('how-it-works/')}>
+          How verification works
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

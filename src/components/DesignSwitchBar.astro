@@ -1,0 +1,95 @@
+---
+import { designs } from '../data/designs';
+
+const active = import.meta.env.SITE_DESIGN;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const path = Astro.url.pathname.slice(base.length) || '/';
+const root = new URL('../', new URL(`${base}/`, Astro.site));
+const target = (slug: string) => new URL(`${slug}${path}`, root).href;
+---
+
+<nav class="design-switch" aria-label="Design preview">
+  <p>Design preview</p>
+  <ul>
+    {designs.map((item) => (
+      <li>
+        <a
+          href={target(item.slug)}
+          aria-current={item.slug === active ? 'true' : undefined}
+        >
+          {item.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style is:global>
+  :root {
+    --switch-paper: oklch(24% 0.012 255);
+    --switch-ink: oklch(94% 0.006 255);
+    --switch-muted: oklch(74% 0.01 255);
+    --switch-rule: oklch(36% 0.014 255);
+    --switch-active: oklch(98% 0.004 255);
+    --switch-active-ink: oklch(20% 0.012 255);
+    --switch-focus: oklch(82% 0.13 80);
+    --switch-font: system-ui, sans-serif;
+  }
+  .design-switch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    min-height: 48px;
+    padding: 8px 16px;
+    background: var(--switch-paper);
+    color: var(--switch-ink);
+    font: 500 0.9375rem/1.2 var(--switch-font);
+    border-bottom: 1px solid var(--switch-rule);
+  }
+  .design-switch p {
+    margin: 0;
+    color: var(--switch-muted);
+  }
+  .design-switch ul {
+    display: flex;
+    gap: 4px;
+    margin: 0;
+    padding: 2px;
+    list-style: none;
+    border: 1px solid var(--switch-rule);
+    border-radius: 999px;
+  }
+  .design-switch a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0 14px;
+    border-radius: 999px;
+    color: var(--switch-ink);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 120ms ease-out;
+  }
+  .design-switch a:hover {
+    background: var(--switch-rule);
+  }
+  .design-switch a:active {
+    background: var(--switch-active);
+    color: var(--switch-active-ink);
+  }
+  .design-switch a:focus-visible {
+    outline: 2px solid var(--switch-focus);
+    outline-offset: 2px;
+  }
+  .design-switch a[aria-current='true'] {
+    background: var(--switch-active);
+    color: var(--switch-active-ink);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .design-switch a {
+      transition: none;
+    }
+  }
+</style>

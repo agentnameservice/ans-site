@@ -1,0 +1,30 @@
+---
+import { navigation, organization, url } from '../../data/site';
+interface Props {
+  pathname: string;
+}
+const { pathname } = Astro.props;
+const current = (path: string) => (pathname === url(path) ? 'page' : undefined);
+---
+
+<nav class="nav-main" aria-label="Main navigation">
+  {navigation.map((item) => (
+    <a href={url(item.path)} aria-current={current(item.path)}>
+      {item.label}
+    </a>
+  ))}
+</nav>
+<a class="nav-github" href={organization}>
+  GitHub
+</a>
+<details class="menu">
+  <summary>Menu</summary>
+  <nav aria-label="Mobile navigation">
+    {navigation.map((item) => (
+      <a href={url(item.path)} aria-current={current(item.path)}>
+        {item.label}
+      </a>
+    ))}
+    <a href={organization}>GitHub</a>
+  </nav>
+</details>

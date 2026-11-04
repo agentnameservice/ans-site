@@ -4,7 +4,15 @@ import { join } from 'node:path';
 
 const site = new URL(process.env.SITE_URL || 'https://ansinfo.ai/');
 const base = site.pathname.replace(/\/$/, '');
-const files = readdirSync('dist', { recursive: true }).filter((file) =>
+const dist = process.env.DIST_DIR || 'dist';
+const linkRoot = {
+  path: (process.env.LINK_ROOT_URL
+    ? new URL(process.env.LINK_ROOT_URL).pathname
+    : `${base}/`
+  ).replace(/\/$/, ''),
+  dir: process.env.LINK_ROOT_DIR || dist,
+};
+const files = readdirSync(dist, { recursive: true }).filter((file) =>
   file.endsWith('.html'),
 );
 const titles = new Set();
@@ -12,7 +20,7 @@ let links = 0;
 
 assert(files.length > 0, 'Build the site before checking it.');
 for (const file of files) {
-  const html = readFileSync(join('dist', file), 'utf8');
+  const html = readFileSync(join(dist, file), 'utf8');
   const redirect = /http-equiv="refresh"/i.test(html);
   const title = html.match(/<title>(.*?)<\/title>/s)?.[1];
   assert(title, `${file}: missing title`);
@@ -30,10 +38,9 @@ for (const file of files) {
       /<meta name="description" content="[^"]+"/,
       `${file}: missing description`,
     );
-    assert.match(
-      html,
-      /<link rel="canonical" href="https:\/\//,
-      `${file}: missing canonical`,
+    assert(
+      html.includes(`<link rel="canonical" href="${site.origin}${base}/`),
+      `${file}: missing canonical for ${site.origin}${base}/`,
     );
     assert.match(html, /<main id="main"/, `${file}: missing main landmark`);
     assert(
@@ -55,26 +62,28 @@ for (const file of files) {
       file === 'index.html' ? '' : file.replace(/index\.html$/, '');
     const target = new URL(href, `${site.origin}${base}/${currentPath}`);
     assert(
-      target.pathname.startsWith(`${base}/`),
+      target.pathname.startsWith(`${linkRoot.path}/`),
       `${file}: link escapes deployment base: ${href}`,
     );
-    let path = decodeURIComponent(target.pathname.slice(base.length + 1));
+    let path = decodeURIComponent(
+      target.pathname.slice(linkRoot.path.length + 1),
+    );
     if (!path || path.endsWith('/')) path += 'index.html';
     assert(
-      existsSync(join('dist', path)),
+      existsSync(join(linkRoot.dir, path)),
       `${file}: broken local link ${href}`,
     );
     if (target.hash && path.endsWith('.html')) {
       const id = decodeURIComponent(target.hash.slice(1));
       assert(
-        readFileSync(join('dist', path), 'utf8').includes(`id="${id}"`),
+        readFileSync(join(linkRoot.dir, path), 'utf8').includes(`id="${id}"`),
         `${file}: missing anchor ${href}`,
       );
     }
     links++;
   }
 }
-const sitemap = readFileSync('dist/sitemap.xml', 'utf8');
+const sitemap = readFileSync(join(dist, 'sitemap.xml'), 'utf8');
 assert.equal(
   (sitemap.match(/<loc>/g) || []).length,
   8,
@@ -96,12 +105,12 @@ for (const match of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
   );
   const path = new URL(match[1]).pathname.slice(base.length + 1);
   assert(
-    existsSync(join('dist', path, 'index.html')),
+    existsSync(join(dist, path, 'index.html')),
     `Missing sitemap page: ${path}`,
   );
 }
 assert(
-  readFileSync('dist/robots.txt', 'utf8').includes(
+  readFileSync(join(dist, 'robots.txt'), 'utf8').includes(
     `${site.origin}${base}/sitemap.xml`,
   ),
 );

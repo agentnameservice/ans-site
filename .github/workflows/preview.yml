@@ -1,0 +1,50 @@
+name: Deploy design preview
+on:
+  push:
+    branches: [design/three-directions]
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  ASTRO_TELEMETRY_DISABLED: '1'
+  PREVIEW_REPOSITORY: ${{ github.repository_owner }}/ans-site-preview
+  PREVIEW_URL: https://${{ github.repository_owner }}.github.io/ans-site-preview/
+  HAS_DEPLOY_KEY: ${{ secrets.PREVIEW_DEPLOY_KEY != '' }}
+concurrency:
+  group: design-preview
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run build:preview
+      - if: env.HAS_DEPLOY_KEY != 'true'
+        run: echo "PREVIEW_DEPLOY_KEY is not set; the preview was built and validated but not published."
+      - if: env.HAS_DEPLOY_KEY == 'true'
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: ${{ env.PREVIEW_REPOSITORY }}
+          ssh-key: ${{ secrets.PREVIEW_DEPLOY_KEY }}
+          path: preview-repo
+      - if: env.HAS_DEPLOY_KEY == 'true'
+        name: Publish the preview
+        run: |
+          set -euo pipefail
+          cd preview-repo
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -R ../dist-preview/. .
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Preview is already up to date."
+            exit 0
+          fi
+          git commit -m "Preview of ans-site ${GITHUB_SHA::7}"
+          git push
