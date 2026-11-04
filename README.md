@@ -34,7 +34,7 @@ The development server runs at `http://127.0.0.1:4321`.
 
 `SITE_DESIGN` selects the design to build; the default is `current`. Page
 components resolve from `src/designs/<design>/pages/`, then from
-`src/designs/shared/pages/`.
+`src/designs/shared/pages/` when that folder exists.
 
 ```sh
 SITE_DESIGN=cobalt npm run dev

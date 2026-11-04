@@ -13,10 +13,11 @@ if (!designSlugs.includes(design)) {
 }
 const designDir = (name) =>
   fileURLToPath(new URL(`./src/designs/${name}/`, import.meta.url));
-const pageFiles = new Set([
-  ...readdirSync(`${designDir('shared')}pages`),
-  ...readdirSync(`${designDir(design)}pages`),
-]);
+const pagesIn = (name) => {
+  const dir = `${designDir(name)}pages`;
+  return existsSync(dir) ? readdirSync(dir) : [];
+};
+const pageFiles = new Set([...pagesIn('shared'), ...pagesIn(design)]);
 const pageAlias = [...pageFiles].map((file) => {
   const own = `${designDir(design)}pages/${file}`;
   return {
