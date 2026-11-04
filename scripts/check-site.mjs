@@ -4,6 +4,10 @@ import { join } from 'node:path';
 
 const site = new URL(process.env.SITE_URL || 'https://ansinfo.ai/');
 const base = site.pathname.replace(/\/$/, '');
+const analytics = process.env.SITE_ANALYTICS_ID;
+const analyticsTag =
+  analytics &&
+  `<script data-goatcounter="https://${analytics}.goatcounter.com/count" async src="https://gc.zgo.at/count.js">`;
 const files = readdirSync('dist', { recursive: true }).filter((file) =>
   file.endsWith('.html'),
 );
@@ -36,11 +40,13 @@ for (const file of files) {
       `${file}: missing canonical`,
     );
     assert.match(html, /<main id="main"/, `${file}: missing main landmark`);
-    assert(
-      !/<script\b|<iframe\b|<form\b/i.test(html),
-      `${file}: unexpected script, embed, or form`,
-    );
   }
+  assert.deepEqual(
+    html.match(/<script\b[^>]*>/gi) ?? [],
+    analyticsTag && !redirect ? [analyticsTag] : [],
+    `${file}: unexpected script`,
+  );
+  assert(!/<iframe\b|<form\b/i.test(html), `${file}: unexpected embed or form`);
   for (const match of html.matchAll(/<img\b[^>]*>/g)) {
     assert(/\balt="[^"]*"/.test(match[0]), `${file}: image without alt text`);
   }
@@ -106,5 +112,5 @@ assert(
   ),
 );
 console.log(
-  `Checked ${files.length} HTML pages, ${links} local references, metadata, landmarks, zero client scripts, and sitemap.`,
+  `Checked ${files.length} HTML pages, ${links} local references, metadata, landmarks, ${analyticsTag ? 'the GoatCounter script only' : 'zero client scripts'}, and sitemap.`,
 );

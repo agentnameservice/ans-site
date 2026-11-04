@@ -43,6 +43,22 @@ SITE_URL=https://agentnameservice.github.io/ans-site/ npm run build
 SITE_URL=https://agentnameservice.github.io/ans-site/ npm test
 ```
 
+### Analytics
+
+Page views are counted with [GoatCounter](https://www.goatcounter.com/) when
+`SITE_ANALYTICS_ID` holds the site's GoatCounter code, the `CODE` in
+`https://CODE.goatcounter.com`. The deployment workflow reads it from the
+`SITE_ANALYTICS_ID` repository variable under **Settings → Secrets and
+variables → Actions → Variables**. When the variable is unset, the default, the
+build emits no analytics script and `npm test` fails if any script is present.
+When it is set, `npm test` requires exactly that GoatCounter script on every page
+and still rejects any other script.
+
+```sh
+SITE_ANALYTICS_ID=ansinfo npm run build
+SITE_ANALYTICS_ID=ansinfo npm test
+```
+
 ## Contributing and license
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution requirements.

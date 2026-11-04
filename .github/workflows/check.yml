@@ -23,3 +23,7 @@ jobs:
         run: npm run build && npm test
         env:
           SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+      - name: Check analytics tag
+        run: npm run build && npm test
+        env:
+          SITE_ANALYTICS_ID: example
