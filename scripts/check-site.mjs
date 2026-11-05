@@ -4,6 +4,15 @@ import { join } from 'node:path';
 
 const site = new URL(process.env.SITE_URL || 'https://ansinfo.ai/');
 const base = site.pathname.replace(/\/$/, '');
+const analytics = process.env.SITE_ANALYTICS_ID;
+const endpoint = analytics && `https://${analytics}.goatcounter.com/count`;
+const analyticsTag =
+  endpoint &&
+  `<script data-goatcounter="${endpoint}" async src="https://gc.zgo.at/count.js">`;
+const analyticsPixel = (html) => {
+  const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)[1];
+  return `<img src="${endpoint}?p=${new URL(canonical).pathname}" alt="">`;
+};
 const files = readdirSync('dist', { recursive: true }).filter((file) =>
   file.endsWith('.html'),
 );
@@ -36,11 +45,18 @@ for (const file of files) {
       `${file}: missing canonical`,
     );
     assert.match(html, /<main id="main"/, `${file}: missing main landmark`);
-    assert(
-      !/<script\b|<iframe\b|<form\b/i.test(html),
-      `${file}: unexpected script, embed, or form`,
-    );
   }
+  assert.deepEqual(
+    html.match(/<script\b[^>]*>/gi) ?? [],
+    analyticsTag && !redirect ? [analyticsTag] : [],
+    `${file}: unexpected script`,
+  );
+  assert.deepEqual(
+    [...html.matchAll(/<noscript>\s*(.*?)\s*<\/noscript>/gis)].map((m) => m[1]),
+    analyticsTag && !redirect ? [analyticsPixel(html)] : [],
+    `${file}: unexpected noscript content`,
+  );
+  assert(!/<iframe\b|<form\b/i.test(html), `${file}: unexpected embed or form`);
   for (const match of html.matchAll(/<img\b[^>]*>/g)) {
     assert(/\balt="[^"]*"/.test(match[0]), `${file}: image without alt text`);
   }
@@ -106,5 +122,5 @@ assert(
   ),
 );
 console.log(
-  `Checked ${files.length} HTML pages, ${links} local references, metadata, landmarks, zero client scripts, and sitemap.`,
+  `Checked ${files.length} HTML pages, ${links} local references, metadata, landmarks, ${analyticsTag ? 'the GoatCounter script and pixel only' : 'zero client scripts'}, and sitemap.`,
 );

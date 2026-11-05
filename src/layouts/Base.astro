@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { SITE_ANALYTICS_ID } from 'astro:env/server';
 import Mark from '../components/Mark.astro';
 import { navigation, organization, specification, url } from '../data/site';
 interface Props {
@@ -9,6 +10,8 @@ interface Props {
 }
 const { title, description, noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const analytics =
+  SITE_ANALYTICS_ID && `https://${SITE_ANALYTICS_ID}.goatcounter.com/count`;
 ---
 
 <!doctype html>
@@ -37,6 +40,19 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     />
     <meta name="twitter:card" content="summary_large_image" />
     <title>{title} · Agent Name Service</title>
+    {analytics && (
+      <>
+        <script
+          is:inline
+          data-goatcounter={analytics}
+          async
+          src="https://gc.zgo.at/count.js"
+        ></script>
+        <noscript>
+          <img src={`${analytics}?p=${Astro.url.pathname}`} alt="" />
+        </noscript>
+      </>
+    )}
   </head>
   <body>
     <a class="skip-link" href="#main">
