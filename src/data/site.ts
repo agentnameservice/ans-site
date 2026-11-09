@@ -1,5 +1,5 @@
 export const organization = 'https://github.com/agentnameservice';
-export const specification = `${organization}/ans-registry`;
+export const specification = `${organization}/ans-spec`;
 
 export const url = (path: string) =>
   `${import.meta.env.BASE_URL.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;

@@ -44,7 +44,7 @@ Trust evaluation is maintained as a separate project.
 ## Project history
 
 ANS builds on _Agent Name Service for Secure AI Agent Discovery_, contributed as
-an IETF Internet-Draft. The [specification repository](https://github.com/agentnameservice/ans-registry#origin)
+an IETF Internet-Draft. The [specification repository](https://github.com/agentnameservice/ans-spec#origin)
 records that work and its authors.
 
 On June 23, 2026, the Linux Foundation

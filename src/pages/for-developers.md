@@ -112,7 +112,7 @@ and versions. The SDKs have different APIs and coverage.
   includes recipes for agentgateway and Agent Router.
 
 Review each example's configuration and coverage before deployment. For wire-level
-contracts, use the [OpenAPI definitions and schemas](https://github.com/agentnameservice/ans-registry/tree/main/api).
+contracts, use the [OpenAPI definitions and schemas](https://github.com/agentnameservice/ans-spec/tree/main/api).
 
 ## Get help
 
