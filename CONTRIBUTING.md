@@ -1,7 +1,7 @@
 # Contributing
 
 Contributions to the ANS website are welcome. Follow the project's
-[Code of Conduct](https://github.com/agentnameservice/ans-registry/blob/main/CODE_OF_CONDUCT.md).
+[Code of Conduct](https://github.com/agentnameservice/ans-spec/blob/main/CODE_OF_CONDUCT.md).
 
 ## Making changes
 
@@ -28,5 +28,5 @@ git commit -s
 
 ## Security reports
 
-Follow the [ANS security policy](https://github.com/agentnameservice/ans-registry/blob/main/SECURITY.md)
+Follow the [ANS security policy](https://github.com/agentnameservice/ans-spec/blob/main/SECURITY.md)
 for suspected vulnerabilities. Do not include vulnerability details in a public issue.
