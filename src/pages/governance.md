@@ -63,7 +63,7 @@ provide local details and review routing.
 
 | Area                                                   | Repository                                                                         | Responsible team                      |
 | ------------------------------------------------------ | ---------------------------------------------------------------------------------- | ------------------------------------- |
-| ANS specifications and schemas                         | [ans-spec](https://github.com/agentnameservice/ans-spec)                       | Specification maintainers             |
+| ANS specifications and schemas                         | [ans-spec](https://github.com/agentnameservice/ans-spec)                           | Specification maintainers             |
 | Registration Authority, Transparency Log, and verifier | [ans](https://github.com/agentnameservice/ans)                                     | Reference implementation maintainers  |
 | Go SDK and CLI                                         | [ans-sdk-go](https://github.com/agentnameservice/ans-sdk-go)                       | Go SDK maintainers                    |
 | Rust SDK                                               | [ans-sdk-rust](https://github.com/agentnameservice/ans-sdk-rust)                   | Rust SDK maintainers                  |
