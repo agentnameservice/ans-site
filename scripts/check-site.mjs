@@ -93,17 +93,16 @@ for (const file of files) {
 const sitemap = readFileSync('dist/sitemap.xml', 'utf8');
 assert.equal(
   (sitemap.match(/<loc>/g) || []).length,
-  8,
-  'Sitemap should contain the eight indexed content pages.',
+  9,
+  'Sitemap should contain the nine canonical content pages.',
 );
 assert(
   !sitemap.includes('/404') &&
     !sitemap.includes('/frameworks') &&
     !sitemap.includes('/contact') &&
     !sitemap.includes('/news') &&
-    !sitemap.includes('/for-business') &&
-    !sitemap.includes('/governance'),
-  'Redirects, placeholders, and errors must not be indexed.',
+    !sitemap.includes('/for-business'),
+  'Redirects and errors must not be indexed.',
 );
 for (const match of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
   assert(

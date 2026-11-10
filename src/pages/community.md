@@ -34,6 +34,22 @@ Use GitHub issues and pull requests in the relevant repository for technical
 questions and proposed changes. Include your environment, the behavior you expected,
 and enough detail for someone else to reproduce the issue.
 
+Project-wide questions and TSC business belong in the
+[governance repository](https://github.com/agentnameservice/governance/issues).
+Meeting announcements, agendas, and notes are linked from the relevant issues.
+There is no standing meeting schedule; anyone can attend open project meetings.
+
+## Grow your involvement
+
+The contributor track progresses from contributor to member, reviewer, and
+maintainer. The [contributor ladder](https://github.com/agentnameservice/governance/blob/main/CONTRIBUTOR_LADDER.md)
+describes the responsibilities and nomination process for each role.
+
+Repository maintainers review and merge technical work. The TSC handles
+project-wide governance and escalated decisions. Read the
+[governance overview](../governance/) to meet the TSC and find the team responsible
+for a repository.
+
 ## Share an integration
 
 Open an issue with public source, installation instructions, the ANS features it

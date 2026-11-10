@@ -638,8 +638,14 @@
     justify-content: space-between;
     gap: 20px;
     padding-block: 20px;
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     color: var(--muted);
+  }
+  .footer-bottom p + p {
+    margin-top: 8px;
+  }
+  .footer-bottom p a {
+    text-decoration: underline;
   }
   .footer-bottom a {
     text-decoration: none;
