@@ -294,6 +294,20 @@
     margin-right: 7px;
     vertical-align: middle;
   }
+  .eyebrow-affiliation {
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .eyebrow-affiliation::before {
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    border-radius: 100%;
+    background: currentColor;
+    margin-right: 0.6em;
+    vertical-align: middle;
+  }
   .hero {
     display: grid;
     grid-template-columns: 1.1fr 1fr;
@@ -934,6 +948,12 @@
     }
     .hero .lead {
       max-width: 560px;
+    }
+    .eyebrow-affiliation {
+      display: block;
+    }
+    .eyebrow-affiliation::before {
+      display: none;
     }
     .identity-figure {
       max-width: 520px;
