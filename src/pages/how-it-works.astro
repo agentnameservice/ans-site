@@ -54,8 +54,9 @@ import { specification, url } from '../data/site';
       <li>
         <h3>Seal the lifecycle event</h3>
         <p>
-          The RA signs the event and the Transparency Log seals it before
-          activation succeeds. Public verification artifacts bind the
+          The RA activates the registration and queues its event in one
+          step. The Transparency Log then seals the event, and verifiers
+          read it from there. Public verification artifacts bind the
           registration to its authorized certificates.
         </p>
       </li>
