@@ -11,6 +11,7 @@ export const navigation = [
   { label: 'Implementations', path: 'ecosystem/' },
   { label: 'Community', path: 'community/' },
   { label: 'Governance', path: 'governance/' },
+  { label: 'News', path: 'news/' },
 ];
 
 export const specs = [

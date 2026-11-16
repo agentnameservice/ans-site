@@ -24,7 +24,9 @@ The development server runs at `http://127.0.0.1:4321`.
 
 - `src/pages/*.md`: project information, governance, community, quickstart, and privacy.
 - `src/pages/*.astro`: homepage, specification index, implementation directory, and protocol overview.
+- `src/pages/news/`: the News index and one filter page per tag in use.
 - `src/data/site.ts`: navigation, specification links, and SDK listings.
+- `src/data/news.ts`: items and tags on the News page, sorted newest first. [CONTRIBUTING.md](CONTRIBUTING.md#submitting-news) defines what qualifies.
 - `src/layouts/`: shared page layouts.
 - `src/styles/global.css`: site styles.
 - `public/`: static assets.

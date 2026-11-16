@@ -1,0 +1,27 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+import Base from '../../../layouts/Base.astro';
+import PageIntro from '../../../components/PageIntro.astro';
+import NewsList from '../../../components/NewsList.astro';
+import { tags } from '../../../data/news';
+
+export const getStaticPaths = (() =>
+  tags.map((tag) => ({
+    params: { slug: tag.slug },
+    props: { tag },
+  }))) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { tag } = Astro.props;
+const group = tag.group === 'kind' ? 'Type' : 'Topic';
+const description = `News about the Agent Name Service tagged ${tag.name}, newest first.`;
+---
+
+<Base title={`News: ${tag.name}`} description={description}>
+  <PageIntro
+    eyebrow={`News / ${group}`}
+    title={`${tag.name}.`}
+    description={description}
+  />
+  <NewsList items={tag.items} active={tag} />
+</Base>

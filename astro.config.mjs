@@ -17,7 +17,6 @@ export default defineConfig({
   redirects: {
     '/frameworks': `${base}/ecosystem/`,
     '/contact': `${base}/community/`,
-    '/news': `${base}/about/#project-history`,
     '/for-business': `${base}/about/#use-cases`,
   },
   env: {

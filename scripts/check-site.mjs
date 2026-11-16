@@ -93,14 +93,13 @@ for (const file of files) {
 const sitemap = readFileSync('dist/sitemap.xml', 'utf8');
 assert.equal(
   (sitemap.match(/<loc>/g) || []).length,
-  9,
-  'Sitemap should contain the nine canonical content pages.',
+  10,
+  'Sitemap should contain the ten canonical content pages.',
 );
 assert(
   !sitemap.includes('/404') &&
     !sitemap.includes('/frameworks') &&
     !sitemap.includes('/contact') &&
-    !sitemap.includes('/news') &&
     !sitemap.includes('/for-business'),
   'Redirects and errors must not be indexed.',
 );
@@ -120,6 +119,22 @@ assert(
     `${site.origin}${base}/sitemap.xml`,
   ),
 );
+const newsPages = files.filter((file) => file.startsWith('news/'));
+assert(newsPages.includes('news/index.html'), 'Missing news index page.');
+for (const file of newsPages) {
+  const dates = [
+    ...readFileSync(join('dist', file), 'utf8').matchAll(
+      /<time datetime="(\d{4}-\d{2}-\d{2})"/g,
+    ),
+  ].map((match) => match[1]);
+  assert(dates.length > 0, `${file}: news page should list at least one item.`);
+  dates.forEach((date, index) => {
+    assert(
+      index === 0 || dates[index - 1] >= date,
+      `${file}: news items must be newest first: ${date} follows ${dates[index - 1]}`,
+    );
+  });
+}
 console.log(
   `Checked ${files.length} HTML pages, ${links} local references, metadata, landmarks, ${analyticsTag ? 'the GoatCounter script and pixel only' : 'zero client scripts'}, and sitemap.`,
 );

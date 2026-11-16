@@ -1,0 +1,81 @@
+---
+import {
+  tags,
+  tagsFor,
+  tagPath,
+  type NewsItem,
+  type NewsTag,
+} from '../data/news';
+import { organization, url } from '../data/site';
+
+interface Props {
+  items: NewsItem[];
+  active?: NewsTag;
+}
+const { items, active } = Astro.props;
+
+const dateFormat = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+const formatDate = (date: string) => {
+  const parsed = new Date(`${date}T00:00:00Z`);
+  if (Number.isNaN(parsed.getTime())) {
+    throw new Error(`Invalid news date: ${date}`);
+  }
+  return dateFormat.format(parsed);
+};
+const guidelines = `${organization}/ans-site/blob/main/CONTRIBUTING.md#submitting-news`;
+---
+
+<section class="container content-section">
+  <nav class="news-filter" aria-label="Filter by tag">
+    <a href={url('news/')} aria-current={active ? undefined : 'page'}>
+      All
+    </a>
+    {tags.map((tag) => (
+      <a
+        href={url(tagPath(tag))}
+        aria-current={tag.slug === active?.slug ? 'page' : undefined}
+      >
+        {tag.name}
+      </a>
+    ))}
+  </nav>
+  <ol class="news-list">
+    {items.map((item) => (
+      <li>
+        <div class="news-meta">
+          <time datetime={item.date}>{formatDate(item.date)}</time>
+          <span>{item.source}</span>
+        </div>
+        <div>
+          <div class="news-tags">
+            {tagsFor(item).map((tag) => (
+              <a
+                class:list={['tag', { topic: tag.group === 'topic' }]}
+                href={url(tagPath(tag))}
+              >
+                {tag.name}
+              </a>
+            ))}
+          </div>
+          <h2>
+            <a href={item.url}>
+              {item.title} <span aria-hidden="true">↗</span>
+            </a>
+          </h2>
+          <p>{item.summary}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+  <p class="section-note">
+    This page lists news about the ANS open source project and its integrations
+    with other open source projects, not general agent or industry news. Read
+    the <a href={guidelines}>news guidelines</a> before suggesting an item in
+    the <a href={`${organization}/ans-site/issues`}>website repository</a>.
+  </p>
+</section>
