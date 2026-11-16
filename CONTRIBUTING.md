@@ -18,6 +18,31 @@ governance summaries aligned with the project records. Integration listings
 should link to public source and documentation and identify research previews
 and examples accurately.
 
+## Submitting news
+
+The News page lists news about the ANS open source project. An item qualifies
+when its subject is one of the following:
+
+- The ANS specifications or a repository in the
+  [agentnameservice GitHub organization](https://github.com/agentnameservice),
+  including releases and reference implementation milestones.
+- A project announcement, such as a Linux Foundation press release or a
+  governance decision.
+- An integration between ANS and another open source project or open
+  standard, for example a directory, gateway, or discovery specification that
+  verifies ANS identities. Tag these items `Interoperability`.
+
+General AI-agent or industry news does not qualify, and neither does a company
+or product announcement that mentions ANS in passing. A vendor article
+qualifies only when ANS itself is its subject.
+
+To suggest an item, open an issue in this repository with the link. To add one,
+append an entry to `src/data/news.ts` with the published title, date, source,
+and `kind` (`Press release` or `Blog post`), plus any `topics`. Write a
+two-sentence summary that states what the item reports, in neutral language.
+The page sorts items newest first and builds a filter page for every kind and
+topic in use. Add a new topic to the `Topic` type before using it.
+
 ## Developer Certificate of Origin
 
 Sign off each commit to certify the [Developer Certificate of Origin](DCO):

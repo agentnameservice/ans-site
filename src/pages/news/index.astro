@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import NewsList from '../../components/NewsList.astro';
+import { news } from '../../data/news';
+
+const description =
+  'Announcements, press releases, and articles about the Agent Name Service, newest first.';
+---
+
+<Base title="News" description={description}>
+  <PageIntro
+    eyebrow="News"
+    title="ANS in the news."
+    description={description}
+  />
+  <NewsList items={news} />
+</Base>
