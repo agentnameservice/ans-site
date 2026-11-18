@@ -20,12 +20,13 @@ and examples accurately.
 
 ## Submitting news
 
-The News page lists news about the ANS open source project. An item qualifies
-when its subject is one of the following:
+The News page lists news about the ANS and Trust Index open source projects.
+An item qualifies when its subject is one of the following:
 
-- The ANS specifications or a repository in the
+- The ANS or Trust Index specifications, or a repository in the
   [agentnameservice GitHub organization](https://github.com/agentnameservice),
-  including releases and reference implementation milestones.
+  including releases and reference implementation milestones. Tag each item
+  with the projects it covers: `ANS`, `Trust Index`, or both.
 - A project announcement, such as a Linux Foundation press release or a
   governance decision.
 - An integration between ANS and another open source project or open
@@ -38,10 +39,11 @@ qualifies only when ANS itself is its subject.
 
 To suggest an item, open an issue in this repository with the link. To add one,
 append an entry to `src/data/news.ts` with the published title, date, source,
-and `kind` (`Press release` or `Blog post`), plus any `topics`. Write a
-two-sentence summary that states what the item reports, in neutral language.
-The page sorts items newest first and builds a filter page for every kind and
-topic in use. Add a new topic to the `Topic` type before using it.
+`kind` (`Press release` or `Blog post`), `projects` (`ANS`, `Trust Index`, or
+both), and any `topics`. Write a two-sentence summary that states what the
+item reports, in neutral language. The page sorts items newest first and
+builds a filter page for every kind, project, and topic in use. Add a new
+project or topic to the `Project` or `Topic` type before using it.
 
 ## Developer Certificate of Origin
 

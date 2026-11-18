@@ -902,6 +902,10 @@
     flex-wrap: wrap;
     gap: 8px;
   }
+  .tag.project {
+    background: #e7eef7;
+    color: var(--primary);
+  }
   .tag.topic {
     padding: 3px 8px;
     background: transparent;

@@ -1,6 +1,7 @@
 export type Kind = 'Press release' | 'Blog post';
+export type Project = 'ANS' | 'Trust Index';
 export type Topic = 'Interoperability';
-export type Tag = Kind | Topic;
+export type Tag = Kind | Project | Topic;
 
 export interface NewsItem {
   title: string;
@@ -8,13 +9,14 @@ export interface NewsItem {
   date: string;
   source: string;
   kind: Kind;
+  projects: [Project, ...Project[]];
   topics?: Topic[];
   summary: string;
 }
 
 export interface NewsTag {
   name: Tag;
-  group: 'kind' | 'topic';
+  group: 'kind' | 'project' | 'topic';
   slug: string;
   items: NewsItem[];
 }
@@ -27,6 +29,7 @@ const items: NewsItem[] = [
     date: '2025-10-02',
     source: 'GoDaddy',
     kind: 'Blog post',
+    projects: ['ANS'],
     summary:
       'GoDaddy presents a proof of concept for an ANS Registry overseen by a Registration Authority that links customer verification, domain validation, paired certificates, DNSSEC-signed records, and transparency logs into one verifiable trust chain. The post walks through the ANS naming format, the registration workflow, and how DNS-based discovery and attestation badges fit together.',
   },
@@ -36,6 +39,7 @@ const items: NewsItem[] = [
     date: '2025-11-05',
     source: 'GoDaddy',
     kind: 'Blog post',
+    projects: ['ANS'],
     summary:
       'GoDaddy argues that standard HTTPS certificates cannot provide the version-specific identity and fast revocation that multi-agent systems need. The post introduces the ANS identity certificate bound to each agent version, event-driven revocation, and the public Transparency Log that records lifecycle events.',
   },
@@ -46,6 +50,7 @@ const items: NewsItem[] = [
     date: '2026-06-17',
     source: 'GoDaddy',
     kind: 'Blog post',
+    projects: ['ANS'],
     topics: ['Interoperability'],
     summary:
       'GoDaddy argues that agents need both verifiable identity and dynamic discovery, and announces the Agentic Resource Discovery (ARD) specification with ten industry collaborators including Cisco, Google, Microsoft, and Salesforce. ANS catalogs are exposed through an ARD-compliant search interface, so an agent can discover a capability through ARD and verify the provider’s identity through ANS.',
@@ -57,6 +62,7 @@ const items: NewsItem[] = [
     date: '2026-06-23',
     source: 'Linux Foundation',
     kind: 'Press release',
+    projects: ['ANS'],
     summary:
       'The Linux Foundation announced plans to launch ANS as an open standard for verifying and locating AI agents, built on DNS rather than a separate registry. Jim Zemlin and Jared Sine are quoted alongside supporters from Cloudflare, Cisco, Infoblox, Salesforce, OWASP, DistributedApps.ai, and Hashgraph Online.',
   },
@@ -67,6 +73,7 @@ const items: NewsItem[] = [
     date: '2026-09-15',
     source: 'GoDaddy',
     kind: 'Blog post',
+    projects: ['ANS'],
     summary:
       'GoDaddy describes how ANS clients and servers verify each other from a registration receipt, a short-lived status token, and the TLS certificate, offline against published root keys. Benchmarks in the post show a full verification completing in well under a millisecond on a single core.',
   },
@@ -77,15 +84,31 @@ const items: NewsItem[] = [
     date: '2026-11-10',
     source: 'Linux Foundation',
     kind: 'Press release',
+    projects: ['ANS'],
     topics: ['Interoperability'],
     summary:
       'The Linux Foundation announced at KubeCon + CloudNativeCon North America that ANS has launched as a Linux Foundation project with eleven supporting organizations and a seven-document specification governed by its Technical Steering Committee. Early adoption includes ANS identity verification in AGNTCY’s Agent Directory Service, another Linux Foundation project, and ANS Finder’s interoperability with the Agentic Resource Discovery specification.',
+  },
+  {
+    title: 'Verify an Agent, Then Decide How Far to Trust It',
+    url: 'https://www.godaddy.com/resources/news/verify-an-agent-then-decide-how-far-to-trust-it',
+    date: '2026-11-18',
+    source: 'GoDaddy',
+    kind: 'Blog post',
+    projects: ['ANS', 'Trust Index'],
+    topics: ['Interoperability'],
+    summary:
+      'GoDaddy describes how the Trust Index specification and Agent Trust Discovery, its open source implementation, build on ANS verification to answer how much to trust an agent and for which actions. Agent Trust Discovery imports the ANS Transparency Log, combines it with signals such as certificate type and drift from a sealed DNS baseline, and returns five dimension scores, a recommended trust profile, and risk codes that must be read together.',
   },
 ];
 
 export const news = items.toSorted((a, b) => b.date.localeCompare(a.date));
 
-const tagNames = (item: NewsItem): Tag[] => [item.kind, ...(item.topics ?? [])];
+const tagNames = (item: NewsItem): Tag[] => [
+  item.kind,
+  ...item.projects,
+  ...(item.topics ?? []),
+];
 
 const inUse = (names: Tag[], group: NewsTag['group']): NewsTag[] =>
   [...new Set(names)].toSorted().map((name) => ({
@@ -101,10 +124,18 @@ export const tags = [
     'kind',
   ),
   ...inUse(
+    news.flatMap((item) => item.projects),
+    'project',
+  ),
+  ...inUse(
     news.flatMap((item) => item.topics ?? []),
     'topic',
   ),
 ];
+
+if (new Set(tags.map((tag) => tag.slug)).size !== tags.length) {
+  throw new Error('News tags must have unique slugs.');
+}
 
 export const tagsFor = (item: NewsItem) =>
   tags.filter((tag) => tagNames(item).includes(tag.name));
