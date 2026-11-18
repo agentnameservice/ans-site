@@ -31,7 +31,7 @@ const items: NewsItem[] = [
     kind: 'Blog post',
     projects: ['ANS'],
     summary:
-      'GoDaddy presents a proof of concept for an ANS Registry overseen by a Registration Authority that links customer verification, domain validation, paired certificates, DNSSEC-signed records, and transparency logs into one verifiable trust chain. The post walks through the ANS naming format, the registration workflow, and how DNS-based discovery and attestation badges fit together.',
+      'Engineers present a proof of concept for an ANS Registry overseen by a Registration Authority that links customer verification, domain validation, paired certificates, DNSSEC-signed records, and transparency logs into one verifiable trust chain. The post walks through the ANS naming format, the registration workflow, and how DNS-based discovery and attestation badges fit together.',
   },
   {
     title: 'Why the Agent Economy Needs a Digital Passport',
@@ -41,7 +41,7 @@ const items: NewsItem[] = [
     kind: 'Blog post',
     projects: ['ANS'],
     summary:
-      'GoDaddy argues that standard HTTPS certificates cannot provide the version-specific identity and fast revocation that multi-agent systems need. The post introduces the ANS identity certificate bound to each agent version, event-driven revocation, and the public Transparency Log that records lifecycle events.',
+      'Engineers argue that standard HTTPS certificates cannot provide the version-specific identity and fast revocation that multi-agent systems need. The post introduces the ANS identity certificate bound to each agent version, event-driven revocation, and the public Transparency Log that records lifecycle events.',
   },
   {
     title:
@@ -53,7 +53,7 @@ const items: NewsItem[] = [
     projects: ['ANS'],
     topics: ['Interoperability'],
     summary:
-      'GoDaddy argues that agents need both verifiable identity and dynamic discovery, and announces the Agentic Resource Discovery (ARD) specification with ten industry collaborators including Cisco, Google, Microsoft, and Salesforce. ANS catalogs are exposed through an ARD-compliant search interface, so an agent can discover a capability through ARD and verify the provider’s identity through ANS.',
+      'Engineers argue that agents need both verifiable identity and dynamic discovery, and introduce the Agentic Resource Discovery (ARD) specification developed with ten industry collaborators. ANS catalogs are exposed through an ARD-compliant search interface, so an agent can discover a capability through ARD and verify the provider’s identity through ANS.',
   },
   {
     title:
@@ -75,7 +75,7 @@ const items: NewsItem[] = [
     kind: 'Blog post',
     projects: ['ANS'],
     summary:
-      'GoDaddy describes how ANS clients and servers verify each other from a registration receipt, a short-lived status token, and the TLS certificate, offline against published root keys. Benchmarks in the post show a full verification completing in well under a millisecond on a single core.',
+      'Engineers describe how ANS clients and servers verify each other from a registration receipt, a short-lived status token, and the TLS certificate, offline against published root keys. Benchmarks in the post show a full verification completing in well under a millisecond on a single core.',
   },
   {
     title:
@@ -98,7 +98,7 @@ const items: NewsItem[] = [
     projects: ['ANS', 'Trust Index'],
     topics: ['Interoperability'],
     summary:
-      'GoDaddy describes how the Trust Index specification and Agent Trust Discovery, its open source implementation, build on ANS verification to answer how much to trust an agent and for which actions. Agent Trust Discovery imports the ANS Transparency Log, combines it with signals such as certificate type and drift from a sealed DNS baseline, and returns five dimension scores, a recommended trust profile, and risk codes that must be read together.',
+      'Engineers describe how the Trust Index specification and Agent Trust Discovery, its open source implementation, build on ANS verification to answer how much to trust an agent and for which actions. Agent Trust Discovery imports the ANS Transparency Log, combines it with signals such as certificate type and drift from a sealed DNS baseline, and returns five dimension scores, a recommended trust profile, and risk codes that must be read together.',
   },
 ];
 
