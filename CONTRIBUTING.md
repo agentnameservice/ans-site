@@ -42,10 +42,10 @@ append an entry to `src/data/news.ts` with the published title, date, source,
 `kind` (`Press release` or `Blog post`), `projects` (`ANS`, `Trust Index`, or
 both), and any `topics`. Write a two-sentence summary that states what the
 item reports, in neutral language. Keep the summary vendor neutral: the
-`source` field names the publisher, so refer to authors as engineers or
-researchers and leave company names out unless the item is about those
-organizations, as a press release listing its supporters is. The page sorts
-items newest first and
+`source` field names the publisher, so make the post or its authors the
+subject, described by role only when the byline supports it, and leave company
+names out unless the item is about those organizations, as a press release
+listing its supporters is. The page sorts items newest first and
 builds a filter page for every kind, project, and topic in use. Add a new
 project or topic to the `Project` or `Topic` type before using it.
 

@@ -53,7 +53,7 @@ const items: NewsItem[] = [
     projects: ['ANS'],
     topics: ['Interoperability'],
     summary:
-      'Engineers argue that agents need both verifiable identity and dynamic discovery, and introduce the Agentic Resource Discovery (ARD) specification developed with ten industry collaborators. ANS catalogs are exposed through an ARD-compliant search interface, so an agent can discover a capability through ARD and verify the provider’s identity through ANS.',
+      'The post argues that agents need both verifiable identity and dynamic discovery, and introduces the Agentic Resource Discovery (ARD) specification developed with ten industry collaborators. ANS catalogs are exposed through an ARD-compliant search interface, so an agent can discover a capability through ARD and verify the provider’s identity through ANS.',
   },
   {
     title:
