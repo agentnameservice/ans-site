@@ -54,10 +54,7 @@ const guidelines = `${organization}/ans-site/blob/main/CONTRIBUTING.md#submittin
         <div>
           <div class="news-tags">
             {tagsFor(item).map((tag) => (
-              <a
-                class:list={['tag', { topic: tag.group === 'topic' }]}
-                href={url(tagPath(tag))}
-              >
+              <a class:list={['tag', tag.group]} href={url(tagPath(tag))}>
                 {tag.name}
               </a>
             ))}
@@ -73,9 +70,10 @@ const guidelines = `${organization}/ans-site/blob/main/CONTRIBUTING.md#submittin
     ))}
   </ol>
   <p class="section-note">
-    This page lists news about the ANS open source project and its integrations
-    with other open source projects, not general agent or industry news. Read
-    the <a href={guidelines}>news guidelines</a> before suggesting an item in
-    the <a href={`${organization}/ans-site/issues`}>website repository</a>.
+    This page lists news about the ANS and Trust Index open source projects and
+    their integrations with other open source projects, not general agent or
+    industry news. Read the <a href={guidelines}>news guidelines</a> before
+    suggesting an item in the{' '}
+    <a href={`${organization}/ans-site/issues`}>website repository</a>.
   </p>
 </section>

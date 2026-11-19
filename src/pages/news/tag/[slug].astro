@@ -13,13 +13,13 @@ export const getStaticPaths = (() =>
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 const { tag } = Astro.props;
-const group = tag.group === 'kind' ? 'Type' : 'Topic';
+const groups = { kind: 'Type', project: 'Project', topic: 'Topic' };
 const description = `News about the Agent Name Service tagged ${tag.name}, newest first.`;
 ---
 
 <Base title={`News: ${tag.name}`} description={description}>
   <PageIntro
-    eyebrow={`News / ${group}`}
+    eyebrow={`News / ${groups[tag.group]}`}
     title={`${tag.name}.`}
     description={description}
   />
