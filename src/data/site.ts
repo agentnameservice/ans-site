@@ -26,7 +26,7 @@ export const specs = [
     id: 'ANS-1',
     title: 'Registration',
     description:
-      'Registration, activation, renewal, deprecation, and revocation.',
+      'Registration, activation, renewal, and revocation. Deprecation is a reserved state.',
     file: 'ans-1-registration.md',
   },
   {
